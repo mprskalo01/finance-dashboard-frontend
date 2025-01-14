@@ -11,12 +11,11 @@ import {
   Bar,
   ResponsiveContainer,
 } from "recharts";
-import api from "@/api/api";
 import DashboardBox from "@/components/DashboardBox";
 import BoxHeader from "@/components/BoxHeader";
 import Svgs from "@/assets/Svgs";
-import { useAccount } from "@/context/AccountContext/UseAccount";
 import EditMonthlyValuesModal from "./EditMonthlyValuesModal"; // Adjust the import path as needed
+import { mockAccount } from "@/data/mockAccount";
 
 export interface MonthlyData {
   month: string;
@@ -26,7 +25,7 @@ export interface MonthlyData {
 
 function CombinedChart() {
   const { palette } = useTheme();
-  const { account, fetchUserAccount } = useAccount();
+  const account = mockAccount;
   const [showChart, setShowChart] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMonths, setEditingMonths] = useState<{
@@ -86,10 +85,11 @@ function CombinedChart() {
           revenue: monthData.revenue, // Convert dollars to cents
           expenses: monthData.expenses, // Convert dollars to cents
         };
-        return api.editMonthlyData(dataToSave);
+        // return api.editMonthlyData(dataToSave);
+        console.log(dataToSave);
       });
       await Promise.all(promises);
-      fetchUserAccount(); // Refresh data after saving changes
+      // fetchUserAccount(); // Refresh data after saving changes
       handleCloseModal(); // Close modal after saving changes
     } catch (error) {
       console.error("Failed to save changes:", error);
@@ -106,10 +106,10 @@ function CombinedChart() {
   );
 
   return (
-    <DashboardBox gridArea="d">
+    <DashboardBox gridArea='d'>
       <BoxHeader
         title={
-          <Box display="flex" gap="10px" alignItems="center">
+          <Box display='flex' gap='10px' alignItems='center'>
             <div>
               <span style={{ color: palette.tertiary[500] }}>Revenue</span>,{" "}
               <span style={{ color: palette.secondary[500] }}>Expenses</span>,{" "}
@@ -118,7 +118,7 @@ function CombinedChart() {
             </div>
             <IconButton
               onClick={handleChartToggle}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(131, 183, 166, 0.1)",
                 "&:hover": {
@@ -129,14 +129,14 @@ function CombinedChart() {
               }}
             >
               {showChart ? (
-                <Svgs.barSvg strokeColor="#f2b455" />
+                <Svgs.barSvg strokeColor='#f2b455' />
               ) : (
-                <Svgs.areaChartSvg fillColor="#f2b455" />
+                <Svgs.areaChartSvg fillColor='#f2b455' />
               )}
             </IconButton>
             <IconButton
               onClick={handleEditMonthlyValues}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(18, 239, 200, 0.1)",
                 "&:hover": {
@@ -146,13 +146,13 @@ function CombinedChart() {
                 borderRadius: "4px",
               }}
             >
-              <Svgs.editSvg fillColor="#0ea5e9" size="24px" />
+              <Svgs.editSvg fillColor='#0ea5e9' size='24px' />
             </IconButton>
           </Box>
         }
-        sideText="Use the edit button to edit monthly values"
+        sideText='Use the edit button to edit monthly values'
       />
-      <ResponsiveContainer width="100%" height="80%">
+      <ResponsiveContainer width='100%' height='80%'>
         {showChart ? (
           <AreaChart
             width={500}
@@ -166,33 +166,33 @@ function CombinedChart() {
             }}
           >
             <defs></defs>
-            <CartesianGrid vertical={false} strokeDasharray="1 2" />
-            <XAxis dataKey="name" />
+            <CartesianGrid vertical={false} strokeDasharray='1 2' />
+            <XAxis dataKey='name' />
             <YAxis domain={[minValue, "auto"]} />
             <Tooltip />
             <Area
-              type="monotone"
-              dataKey="profit"
-              stackId="1"
+              type='monotone'
+              dataKey='profit'
+              stackId='1'
               dot={true}
               stroke={palette.primary[500]}
-              fill="url(#colorProfit)"
+              fill='url(#colorProfit)'
             />
             <Area
-              type="monotone"
-              dataKey="expenses"
-              stackId="1"
+              type='monotone'
+              dataKey='expenses'
+              stackId='1'
               dot={true}
               stroke={palette.secondary[500]}
-              fill="url(#colorExpenses)"
+              fill='url(#colorExpenses)'
             />
             <Area
-              type="monotone"
-              dataKey="revenue"
-              stackId="1"
+              type='monotone'
+              dataKey='revenue'
+              stackId='1'
               dot={true}
               stroke={palette.tertiary[500]}
-              fill="url(#colorRevenue)"
+              fill='url(#colorRevenue)'
             />
           </AreaChart>
         ) : (
@@ -208,13 +208,13 @@ function CombinedChart() {
             }}
           >
             <defs></defs>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <CartesianGrid strokeDasharray='3 3' />
+            <XAxis dataKey='name' />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="revenue" stackId="a" fill="url(#colorRevenue)" />
-            <Bar dataKey="expenses" stackId="b" fill="url(#colorExpenses)" />
-            <Bar dataKey="profit" stackId="c" fill="url(#colorProfit)" />
+            <Bar dataKey='revenue' stackId='a' fill='url(#colorRevenue)' />
+            <Bar dataKey='expenses' stackId='b' fill='url(#colorExpenses)' />
+            <Bar dataKey='profit' stackId='c' fill='url(#colorProfit)' />
           </BarChart>
         )}
       </ResponsiveContainer>

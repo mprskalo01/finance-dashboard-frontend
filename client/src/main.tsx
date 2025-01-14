@@ -1,10 +1,10 @@
 import { createRoot } from "react-dom/client";
 import "@/index.css";
 import App from "@/App.tsx";
-import CombinedProvider from "@/context/CombinedProvider";
+import { StrictMode } from "react";
 
 createRoot(document.getElementById("root")!).render(
-  <CombinedProvider>
+  <StrictMode>
     <App />
-  </CombinedProvider>
+  </StrictMode>
 );

@@ -14,11 +14,11 @@ import {
 import DashboardBox from "@/components/DashboardBox";
 import BoxHeader from "@/components/BoxHeader";
 import Svgs from "@/assets/Svgs";
-import { useAccount } from "@/context/AccountContext/UseAccount";
+import { mockAccount } from "@/data/mockAccount";
 
 function ExpensesChart() {
   const { palette } = useTheme();
-  const { account } = useAccount();
+  const account = mockAccount;
   const [showExpensesChart, setShowExpensesChart] = useState(true);
 
   const revenueExpensesProfit = useMemo(() => {
@@ -57,14 +57,14 @@ function ExpensesChart() {
   }, [account]);
 
   return (
-    <DashboardBox gridArea="b">
+    <DashboardBox gridArea='b'>
       <BoxHeader
         title={
-          <Box display="flex" gap="10px" alignItems="center">
+          <Box display='flex' gap='10px' alignItems='center'>
             <span style={{ color: palette.secondary[500] }}>Expenses</span>
             <IconButton
               onClick={handleExpensesToggle}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(242, 180, 85, 0.1)",
                 "&:hover": {
@@ -75,16 +75,16 @@ function ExpensesChart() {
               }}
             >
               {showExpensesChart ? (
-                <Svgs.barSvg strokeColor="#ff7300" />
+                <Svgs.barSvg strokeColor='#ff7300' />
               ) : (
-                <Svgs.areaChartSvg fillColor="#ff7300" />
+                <Svgs.areaChartSvg fillColor='#ff7300' />
               )}
             </IconButton>
           </Box>
         }
         sideText={expensesPercentageChange}
       />
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width='100%' height='100%'>
         {showExpensesChart ? (
           <AreaChart
             width={500}
@@ -98,14 +98,14 @@ function ExpensesChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorExpenses' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.secondary[500]}
                   stopOpacity={0.5}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.secondary[300]}
                   stopOpacity={0}
                 />
@@ -113,7 +113,7 @@ function ExpensesChart() {
             </defs>
             <CartesianGrid vertical={false} horizontal={false} />
             <XAxis
-              dataKey="name"
+              dataKey='name'
               tickLine={false}
               style={{ fontSize: "10px" }}
             />
@@ -125,12 +125,12 @@ function ExpensesChart() {
             />
             <Tooltip />
             <Area
-              type="monotone"
-              dataKey="expenses"
+              type='monotone'
+              dataKey='expenses'
               dot={true}
               stroke={palette.secondary[500]}
               fillOpacity={1}
-              fill="url(#colorExpenses)"
+              fill='url(#colorExpenses)'
             />
           </AreaChart>
         ) : (
@@ -146,14 +146,14 @@ function ExpensesChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorExpenses' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.secondary[500]}
                   stopOpacity={0.5}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.secondary[400]}
                   stopOpacity={0}
                 />
@@ -161,7 +161,7 @@ function ExpensesChart() {
             </defs>
             <CartesianGrid vertical={false} stroke={palette.grey[800]} />
             <XAxis
-              dataKey="name"
+              dataKey='name'
               axisLine={false}
               tickLine={false}
               style={{ fontSize: "10px" }}
@@ -172,7 +172,7 @@ function ExpensesChart() {
               style={{ fontSize: "10px" }}
             />
             <Tooltip />
-            <Bar dataKey="expenses" fill="url(#colorExpenses)" />
+            <Bar dataKey='expenses' fill='url(#colorExpenses)' />
           </BarChart>
         )}
       </ResponsiveContainer>

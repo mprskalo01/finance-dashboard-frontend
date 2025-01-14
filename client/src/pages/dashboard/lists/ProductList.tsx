@@ -5,8 +5,7 @@ import { Box, useTheme, IconButton, styled } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { ProductDialog, DeleteConfirmationDialog } from "./ProductDialog";
 import Svgs from "@/assets/Svgs";
-import { useProductContext } from "@/context/ProductContext/useProduct";
-import api from "@/api/api";
+import { mockProducts } from "@/data/mockProducts";
 
 interface Product {
   _id: string;
@@ -18,68 +17,78 @@ interface Product {
 
 function ProductList() {
   const { palette } = useTheme();
-  const { products, setProducts, user } = useProductContext();
+  const products = mockProducts;
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleAddProduct = async (productData: {
-    name: string;
-    price: number;
-    expense: number;
-    inStock: number; // Ensure inStock is handled
-  }) => {
-    if (user) {
-      try {
-        const response = await api.createProduct({
-          userId: user._id,
-          ...productData,
-        });
-        setProducts((prevProducts) => [...prevProducts, response.data]);
-        setOpenAddDialog(false);
-      } catch (error) {
-        console.error("Failed to add product:", error);
-      }
-    }
-  };
+  // const handleAddProduct = async (productData: {
+  //   name: string;
+  //   price: number;
+  //   expense: number;
+  //   inStock: number; // Ensure inStock is handled
+  // }) => {
+  //   if (user) {
+  //     try {
+  //       const response = await api.createProduct({
+  //         userId: user._id,
+  //         ...productData,
+  //       });
+  //       setProducts((prevProducts) => [...prevProducts, response.data]);
+  //       setOpenAddDialog(false);
+  //     } catch (error) {
+  //       console.error("Failed to add product:", error);
+  //     }
+  //   }
+  // };
 
-  const handleEditProduct = async (productData: {
-    name: string;
-    price: number;
-    expense: number;
-    inStock: number; // Ensure inStock is handled
-  }) => {
-    if (selectedProduct) {
-      try {
-        const response = await api.updateProduct(
-          selectedProduct._id,
-          productData
-        );
-        setProducts((prevProducts) =>
-          prevProducts.map((p) =>
-            p._id === selectedProduct._id ? response.data : p
-          )
-        );
-        setOpenEditDialog(false);
-      } catch (error) {
-        console.error("Failed to update product:", error);
-      }
-    }
-  };
+  // const handleEditProduct = async (productData: {
+  //   name: string;
+  //   price: number;
+  //   expense: number;
+  //   inStock: number; // Ensure inStock is handled
+  // }) => {
+  //   if (selectedProduct) {
+  //     try {
+  //       const response = await api.updateProduct(
+  //         selectedProduct._id,
+  //         productData
+  //       );
+  //       setProducts((prevProducts) =>
+  //         prevProducts.map((p) =>
+  //           p._id === selectedProduct._id ? response.data : p
+  //         )
+  //       );
+  //       setOpenEditDialog(false);
+  //     } catch (error) {
+  //       console.error("Failed to update product:", error);
+  //     }
+  //   }
+  // };
 
+  // const handleDeleteProduct = async () => {
+  //   if (selectedProduct) {
+  //     try {
+  //       await api.deleteProduct(selectedProduct._id);
+  //       setProducts((prevProducts) =>
+  //         prevProducts.filter((p) => p._id !== selectedProduct._id)
+  //       );
+  //       setOpenDeleteDialog(false);
+  //     } catch (error) {
+  //       console.error("Failed to delete product:", error);
+  //     }
+  //   }
+  // };
+
+  const handleAddProduct = async () => {
+    console.log("fake");
+  };
+  const handleEditProduct = async () => {
+    console.log("fake");
+  };
   const handleDeleteProduct = async () => {
-    if (selectedProduct) {
-      try {
-        await api.deleteProduct(selectedProduct._id);
-        setProducts((prevProducts) =>
-          prevProducts.filter((p) => p._id !== selectedProduct._id)
-        );
-        setOpenDeleteDialog(false);
-      } catch (error) {
-        console.error("Failed to delete product:", error);
-      }
-    }
+    console.log("fake");
   };
 
   const StyledCell = styled("div")({
@@ -144,7 +153,7 @@ function ProductList() {
             }}
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", margin: "0 5px" }}
           >
-            <Svgs.editSvg fillColor="#fff" size="12px" />
+            <Svgs.editSvg fillColor='#fff' size='12px' />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -153,7 +162,7 @@ function ProductList() {
             }}
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", margin: "0 5px" }}
           >
-            <Svgs.deleteSvg fillColor="#fff" />
+            <Svgs.deleteSvg fillColor='#fff' />
           </IconButton>
         </Box>
       ),
@@ -161,16 +170,16 @@ function ProductList() {
   ];
 
   return (
-    <DashboardBox gridArea="h">
+    <DashboardBox gridArea='h'>
       <BoxHeader
         title={
-          <Box display="flex" gap="10px" alignItems="center">
+          <Box display='flex' gap='10px' alignItems='center'>
             <span style={{ color: palette.tertiary[200] }}>
               List of products
             </span>
             <IconButton
               onClick={() => setOpenAddDialog(true)}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(136, 132, 216, 0.1)",
                 "&:hover": {
@@ -179,7 +188,7 @@ function ProductList() {
                 borderRadius: "4px",
               }}
             >
-              <Svgs.addSvg strokeColor="#12efc8" />
+              <Svgs.addSvg strokeColor='#12efc8' />
             </IconButton>
           </Box>
         }
@@ -190,9 +199,9 @@ function ProductList() {
         }
       />
       <Box
-        mt="0.5rem"
-        p="0 0.5rem"
-        height="75%"
+        mt='0.5rem'
+        p='0 0.5rem'
+        height='75%'
         sx={{
           "& .MuiDataGrid-root": {
             color: palette.grey[300],
@@ -219,7 +228,7 @@ function ProductList() {
         open={openAddDialog}
         onClose={() => setOpenAddDialog(false)}
         onSubmit={handleAddProduct}
-        title="Add Product"
+        title='Add Product'
       />
 
       <ProductDialog
@@ -236,7 +245,7 @@ function ProductList() {
               }
             : undefined
         }
-        title="Edit Product"
+        title='Edit Product'
       />
 
       <DeleteConfirmationDialog

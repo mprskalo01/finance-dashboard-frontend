@@ -11,7 +11,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { useProductContext } from "@/context/ProductContext/useProduct";
+import { mockProducts } from "@/data/mockProducts";
 
 interface Product {
   _id: string;
@@ -42,7 +42,7 @@ interface CombinedTransactionDialogProps {
 export const CombinedTransactionDialog: React.FC<
   CombinedTransactionDialogProps
 > = ({ open, onClose, onSubmit, initialData, title }) => {
-  const { products, updateProductStock } = useProductContext();
+  const products = mockProducts;
   const [mode, setMode] = useState<"regular" | "product">("regular");
 
   // Regular transaction state
@@ -103,14 +103,11 @@ export const CombinedTransactionDialog: React.FC<
         description: transactionDescription,
       };
 
-      updateProductStock(selectedProduct._id, quantity, transactionType);
+      // updateProductStock(selectedProduct._id, quantity, transactionType);
       onSubmit(newProductTransaction);
       onClose();
     }
   };
-
-
-  
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -122,44 +119,44 @@ export const CombinedTransactionDialog: React.FC<
           onChange={(_e, newMode) => setMode(newMode)}
           fullWidth
         >
-          <ToggleButton value="regular">Regular Transaction</ToggleButton>
-          <ToggleButton value="product">Product Transaction</ToggleButton>
+          <ToggleButton value='regular'>Regular Transaction</ToggleButton>
+          <ToggleButton value='product'>Product Transaction</ToggleButton>
         </ToggleButtonGroup>
         {mode === "regular" ? (
           <>
             <TextField
-              label="Amount"
-              type="number"
+              label='Amount'
+              type='number'
               value={amount}
               onChange={(e) => setAmount(parseFloat(e.target.value))}
               fullWidth
-              margin="normal"
+              margin='normal'
             />
             <Select
               value={type}
               onChange={(e) => setType(e.target.value as "revenue" | "expense")}
               fullWidth
-              margin="dense"
+              margin='dense'
             >
-              <MenuItem value="revenue">Revenue</MenuItem>
-              <MenuItem value="expense">Expense</MenuItem>
+              <MenuItem value='revenue'>Revenue</MenuItem>
+              <MenuItem value='expense'>Expense</MenuItem>
             </Select>
             {initialData && (
               <TextField
-                label="Date"
-                type="date"
+                label='Date'
+                type='date'
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 fullWidth
-                margin="normal"
+                margin='normal'
               />
             )}
             <TextField
-              label="Description"
+              label='Description'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
-              margin="normal"
+              margin='normal'
             />
           </>
         ) : (
@@ -171,7 +168,7 @@ export const CombinedTransactionDialog: React.FC<
                 setSelectedProduct(product || null);
               }}
               fullWidth
-              margin="dense"
+              margin='dense'
             >
               {products.map((product) => (
                 <MenuItem key={product._id} value={product._id}>
@@ -185,18 +182,18 @@ export const CombinedTransactionDialog: React.FC<
                 setTransactionType(e.target.value as "purchase" | "sale")
               }
               fullWidth
-              margin="dense"
+              margin='dense'
             >
-              <MenuItem value="purchase">Purchase</MenuItem>
-              <MenuItem value="sale">Sale</MenuItem>
+              <MenuItem value='purchase'>Purchase</MenuItem>
+              <MenuItem value='sale'>Sale</MenuItem>
             </Select>
             <TextField
-              label="Quantity"
-              type="number"
+              label='Quantity'
+              type='number'
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
               fullWidth
-              margin="normal"
+              margin='normal'
             />
           </>
         )}

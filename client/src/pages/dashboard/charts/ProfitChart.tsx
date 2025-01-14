@@ -15,11 +15,11 @@ import {
   ReferenceLine,
 } from "recharts";
 import Svgs from "@/assets/Svgs";
-import { useAccount } from "@/context/AccountContext/UseAccount";
+import { mockAccount } from "@/data/mockAccount";
 
 function ProfitChart() {
   const { palette } = useTheme();
-  const { account } = useAccount();
+  const account = mockAccount;
   const [showProfitChart, setShowProfitChart] = useState(true);
 
   const handleProfitToggle = () => {
@@ -79,14 +79,14 @@ function ProfitChart() {
   const buffer = 50; // Adjust the buffer as needed
 
   return (
-    <DashboardBox gridArea="c">
+    <DashboardBox gridArea='c'>
       <BoxHeader
         title={
-          <Box display="flex" gap="10px" alignItems="center">
+          <Box display='flex' gap='10px' alignItems='center'>
             <span style={{ color: palette.primary[500] }}>Profit</span>
             <IconButton
               onClick={handleProfitToggle}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(18, 239, 200, 0.1)",
                 "&:hover": {
@@ -97,9 +97,9 @@ function ProfitChart() {
               }}
             >
               {showProfitChart ? (
-                <Svgs.barSvg strokeColor="#12efc8" />
+                <Svgs.barSvg strokeColor='#12efc8' />
               ) : (
-                <Svgs.areaChartSvg fillColor="#12efc8" />
+                <Svgs.areaChartSvg fillColor='#12efc8' />
               )}
             </IconButton>
           </Box>
@@ -107,7 +107,7 @@ function ProfitChart() {
         sideText={profitPercentageChange}
       />
 
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width='100%' height='100%'>
         {showProfitChart ? (
           <AreaChart
             width={500}
@@ -121,31 +121,31 @@ function ProfitChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorProfit' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.primary[400]}
                   stopOpacity={0.8}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.primary[400]}
                   stopOpacity={0}
                 />
               </linearGradient>
               <linearGradient
-                id="colorProfitNegative"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
+                id='colorProfitNegative'
+                x1='0'
+                y1='0'
+                x2='0'
+                y2='1'
               >
-                <stop offset="5%" stopColor="red" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="red" stopOpacity={0} />
+                <stop offset='5%' stopColor='red' stopOpacity={0.8} />
+                <stop offset='95%' stopColor='red' stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis
-              dataKey="name"
+              dataKey='name'
               tickLine={false}
               style={{ fontSize: "10px" }}
             />
@@ -161,14 +161,14 @@ function ProfitChart() {
               horizontal={false}
               stroke={palette.grey[800]}
             />
-            <ReferenceLine y={0} stroke="rgba(200,0,0,0.5)" />
+            <ReferenceLine y={0} stroke='rgba(200,0,0,0.5)' />
             <Area
-              type="monotone"
-              dataKey="profit"
+              type='monotone'
+              dataKey='profit'
               dot={true}
               stroke={palette.primary.main}
               fillOpacity={1}
-              fill="url(#colorProfit)"
+              fill='url(#colorProfit)'
             />
           </AreaChart>
         ) : (
@@ -184,14 +184,14 @@ function ProfitChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorProfit' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.primary[500]}
                   stopOpacity={0.8}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.primary[400]}
                   stopOpacity={0}
                 />
@@ -199,7 +199,7 @@ function ProfitChart() {
             </defs>
             <CartesianGrid vertical={false} stroke={palette.grey[800]} />
             <XAxis
-              dataKey="name"
+              dataKey='name'
               axisLine={false}
               tickLine={false}
               style={{ fontSize: "10px" }}
@@ -210,7 +210,7 @@ function ProfitChart() {
               style={{ fontSize: "10px" }}
             />
             <Tooltip />
-            <Bar dataKey="profit" fill="url(#colorProfit)" />
+            <Bar dataKey='profit' fill='url(#colorProfit)' />
           </BarChart>
         )}
       </ResponsiveContainer>

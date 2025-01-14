@@ -14,11 +14,11 @@ import {
 import DashboardBox from "@/components/DashboardBox";
 import BoxHeader from "@/components/BoxHeader";
 import Svgs from "@/assets/Svgs";
-import { useAccount } from "@/context/AccountContext/UseAccount";
+import { mockAccount } from "@/data/mockAccount";
 
 function RevenueChart() {
   const { palette } = useTheme();
-  const { account } = useAccount();
+  const account = mockAccount;
   const [showRevenueChart, setShowRevenueChart] = useState(true);
 
   const revenueExpensesProfit = useMemo(() => {
@@ -57,14 +57,14 @@ function RevenueChart() {
   }, [account]);
 
   return (
-    <DashboardBox gridArea="a">
+    <DashboardBox gridArea='a'>
       <BoxHeader
         title={
-          <Box display="flex" gap="10px" alignItems="center">
+          <Box display='flex' gap='10px' alignItems='center'>
             <span style={{ color: palette.tertiary[500] }}>Revenue</span>
             <IconButton
               onClick={handleRevenueToggle}
-              size="small"
+              size='small'
               sx={{
                 backgroundColor: "rgba(136, 132, 216, 0.2)",
                 "&:hover": {
@@ -75,16 +75,16 @@ function RevenueChart() {
               }}
             >
               {showRevenueChart ? (
-                <Svgs.barSvg strokeColor="#8884d8" />
+                <Svgs.barSvg strokeColor='#8884d8' />
               ) : (
-                <Svgs.areaChartSvg fillColor="#8884d8" />
+                <Svgs.areaChartSvg fillColor='#8884d8' />
               )}
             </IconButton>
           </Box>
         }
         sideText={revenuePercentageChange}
       />
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width='100%' height='100%'>
         {showRevenueChart ? (
           <AreaChart
             width={500}
@@ -98,21 +98,21 @@ function RevenueChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorRevenue' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.tertiary[500]}
                   stopOpacity={0.5}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.tertiary[300]}
                   stopOpacity={0}
                 />
               </linearGradient>
             </defs>
             <XAxis
-              dataKey="name"
+              dataKey='name'
               tickLine={false}
               style={{ fontSize: "10px" }}
             />
@@ -124,12 +124,12 @@ function RevenueChart() {
             />
             <Tooltip />
             <Area
-              type="monotone"
-              dataKey="revenue"
+              type='monotone'
+              dataKey='revenue'
               dot={true}
               stroke={palette.tertiary[500]}
               fillOpacity={1}
-              fill="url(#colorRevenue)"
+              fill='url(#colorRevenue)'
             />
           </AreaChart>
         ) : (
@@ -145,14 +145,14 @@ function RevenueChart() {
             }}
           >
             <defs>
-              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id='colorRevenue' x1='0' y1='0' x2='0' y2='1'>
                 <stop
-                  offset="5%"
+                  offset='5%'
                   stopColor={palette.tertiary[500]}
                   stopOpacity={0.5}
                 />
                 <stop
-                  offset="95%"
+                  offset='95%'
                   stopColor={palette.tertiary[400]}
                   stopOpacity={0}
                 />
@@ -160,7 +160,7 @@ function RevenueChart() {
             </defs>
             <CartesianGrid vertical={false} stroke={palette.grey[800]} />
             <XAxis
-              dataKey="name"
+              dataKey='name'
               axisLine={false}
               tickLine={false}
               style={{ fontSize: "10px" }}
@@ -171,7 +171,7 @@ function RevenueChart() {
               style={{ fontSize: "10px" }}
             />
             <Tooltip />
-            <Bar dataKey="revenue" fill="url(#colorRevenue)" />
+            <Bar dataKey='revenue' fill='url(#colorRevenue)' />
           </BarChart>
         )}
       </ResponsiveContainer>

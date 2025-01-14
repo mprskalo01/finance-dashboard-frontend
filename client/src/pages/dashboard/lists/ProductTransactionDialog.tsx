@@ -9,7 +9,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { useProductContext } from "@/context/ProductContext/useProduct";
+import { mockProducts } from "@/data/mockProducts";
 
 interface Product {
   _id: string;
@@ -32,7 +32,7 @@ interface ProductTransactionDialogProps {
 export const ProductTransactionDialog: React.FC<
   ProductTransactionDialogProps
 > = ({ open, onClose, onSubmit }) => {
-  const { products, updateProductStock } = useProductContext();
+  const products = mockProducts;
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [transactionType, setTransactionType] = useState<"purchase" | "sale">(
     "purchase"
@@ -53,11 +53,11 @@ export const ProductTransactionDialog: React.FC<
       });
 
       try {
-        await updateProductStock(
-          selectedProduct._id,
-          quantity,
-          transactionType
-        );
+        // await updateProductStock(
+        //   selectedProduct._id,
+        //   quantity,
+        //   transactionType
+        // );
       } catch (error) {
         console.error("Failed to update product stock:", error);
       }
@@ -78,7 +78,7 @@ export const ProductTransactionDialog: React.FC<
               setSelectedProduct(product || null);
             }}
             fullWidth
-            margin="dense"
+            margin='dense'
           >
             {products.map((product) => (
               <MenuItem key={product._id} value={product._id}>
@@ -92,18 +92,18 @@ export const ProductTransactionDialog: React.FC<
               setTransactionType(e.target.value as "purchase" | "sale")
             }
             fullWidth
-            margin="dense"
+            margin='dense'
           >
-            <MenuItem value="purchase">Purchase</MenuItem>
-            <MenuItem value="sale">Sale</MenuItem>
+            <MenuItem value='purchase'>Purchase</MenuItem>
+            <MenuItem value='sale'>Sale</MenuItem>
           </Select>
           <TextField
-            label="Quantity"
-            type="number"
+            label='Quantity'
+            type='number'
             value={quantity}
             onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
             fullWidth
-            margin="normal"
+            margin='normal'
           />
         </>
       </DialogContent>

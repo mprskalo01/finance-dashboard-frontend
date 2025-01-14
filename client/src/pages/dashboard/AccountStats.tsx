@@ -13,10 +13,7 @@ import {
   DialogActions,
 } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
-import api from "@/api/api";
 import DashboardBox from "@/components/DashboardBox";
-// import { useUser } from "@/hooks/userHooks";
-// import { useAccount } from "@/context/AccountContext/UseAccount"; // Import useAccount
 import BoxHeader from "@/components/BoxHeader";
 import Svgs from "@/assets/Svgs";
 import { mockAccount } from "@/data/mockAccount";
@@ -79,7 +76,7 @@ function AccountStats() {
 
   const handleSaveChanges = async () => {
     try {
-      await api.updateAccount(editedAccount);
+      // await api.updateAccount(editedAccount);
       setIsModalOpen(false);
     } catch (err) {
       console.log(err);
@@ -108,10 +105,11 @@ function AccountStats() {
     }
 
     // Check if the current password is correct
-    const isPasswordCorrect = await api.verifyCurrentPassword(
-      user?.email || "",
-      editUserData.currentPassword
-    );
+    // await api.verifyCurrentPassword(
+    //   user?.email || "",
+    //   editUserData.currentPassword
+    // );
+    const isPasswordCorrect = true;
     if (!isPasswordCorrect) {
       alert("Wrong Current Password Entered");
       setEditUserData((prev) => ({
@@ -124,13 +122,13 @@ function AccountStats() {
     }
 
     try {
-      await api.updateUserProfile({
-        name: editUserData.name,
-        email: editUserData.email,
-        ...(editUserData.newPassword && {
-          newPassword: editUserData.newPassword,
-        }),
-      });
+      // await api.updateUserProfile({
+      //   name: editUserData.name,
+      //   email: editUserData.email,
+      //   ...(editUserData.newPassword && {
+      //     newPassword: editUserData.newPassword,
+      //   }),
+      // });
       setIsEditUserModalOpen(false);
     } catch (err) {
       console.log(err);

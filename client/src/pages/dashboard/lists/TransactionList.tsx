@@ -8,10 +8,9 @@ import {
 import DashboardBox from "@/components/DashboardBox";
 import BoxHeader from "@/components/BoxHeader";
 import Svgs from "@/assets/Svgs";
-import api from "@/api/api";
-import { useAccount } from "@/context/AccountContext/UseAccount";
-import { useProductContext } from "@/context/ProductContext/useProduct";
 import { CombinedTransactionDialog } from "./CombinedTransactionDialog";
+import { mockAccount } from "@/data/mockAccount";
+// import { mockProducts } from "@/data/mockProducts";
 
 interface Transaction {
   _id: string;
@@ -23,8 +22,8 @@ interface Transaction {
 
 const TransactionList = () => {
   const { palette } = useTheme();
-  const { account, fetchUserAccount } = useAccount();
-  const { products, revertProductStock } = useProductContext();
+  const account = mockAccount;
+  // const products = mockProducts;
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -52,7 +51,9 @@ const TransactionList = () => {
       .toLowerCase();
 
     try {
-      await api.addTransaction({ ...transactionData, date });
+      // await api.addTransaction({ ...transactionData, date });
+      console.log(date, "fake");
+      // await account.transactions.push({ ...transactionData, date });
 
       // Update monthlyData
       const monthData = account?.monthlyData.find((m) => m.month === month);
@@ -77,7 +78,7 @@ const TransactionList = () => {
         message: "Transaction processed successfully",
         isError: false,
       });
-      fetchUserAccount(); // Refetch account data
+      // fetchUserAccount(); // Refetch account data
     } catch (err) {
       console.error(err);
       setSnackbar({
@@ -93,10 +94,10 @@ const TransactionList = () => {
   ) => {
     if (selectedTransaction) {
       try {
-        await api.updateTransaction({
-          transactionId: selectedTransaction._id,
-          ...transactionData,
-        });
+        // await api.updateTransaction({
+        //   transactionId: selectedTransaction._id,
+        //   ...transactionData,
+        // });
 
         // Update monthlyData
         const date = new Date(transactionData.date);
@@ -117,7 +118,7 @@ const TransactionList = () => {
           message: "Transaction updated successfully",
           isError: false,
         });
-        fetchUserAccount(); // Refetch account data
+        // fetchUserAccount(); // Refetch account data
       } catch (err) {
         console.error(err);
         setSnackbar({
@@ -132,33 +133,34 @@ const TransactionList = () => {
   const handleDeleteTransaction = async () => {
     if (selectedTransaction) {
       try {
-        // Check if the transaction is a product transaction
-        const { description } = selectedTransaction;
-        const productTransactionMatch = description.match(
-          /(purchase|sale) of (\d+) (.+)/
-        );
-        if (productTransactionMatch) {
-          const [, transactionType, quantityStr, productName] =
-            productTransactionMatch;
-          const quantity = parseInt(quantityStr, 10);
-          const product = products.find((p) => p.name === productName);
-          if (product) {
-            revertProductStock(
-              product._id,
-              quantity,
-              transactionType as "purchase" | "sale"
-            );
-          }
-        }
+        // // Check if the transaction is a product transaction
+        // const { description } = selectedTransaction;
+        // const productTransactionMatch = description.match(
+        //   /(purchase|sale) of (\d+) (.+)/
+        // );
+        // if (productTransactionMatch) {
+        //   const [, transactionType, quantityStr, productName] =
+        //     productTransactionMatch;
+        //   const quantity = parseInt(quantityStr, 10);
+        //   const product = products.find((p) => p.name === productName);
+        //   if (product) {
+        //     revertProductStock(
+        //       product._id,
+        //       quantity,
+        //       transactionType as "purchase" | "sale"
+        //     );
+        //   }
+        // }
 
-        await api.deleteTransaction(selectedTransaction._id);
-        setSnackbar({
-          open: true,
-          message: "Transaction deleted successfully",
-          isError: false,
-        });
-        fetchUserAccount(); // Refetch account data
-        setOpenDeleteDialog(false);
+        // await api.deleteTransaction(selectedTransaction._id);
+        // setSnackbar({
+        //   open: true,
+        //   message: "Transaction deleted successfully",
+        //   isError: false,
+        // });
+        // fetchUserAccount(); // Refetch account data
+        // setOpenDeleteDialog(false);
+        console.log("fake");
       } catch (err) {
         console.error(err);
         setSnackbar({
@@ -208,7 +210,7 @@ const TransactionList = () => {
             }}
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", margin: "0 5px" }}
           >
-            <Svgs.editSvg fillColor="#fff" size="12px" />
+            <Svgs.editSvg fillColor='#fff' size='12px' />
           </IconButton>
           <IconButton
             onClick={() => {
@@ -217,7 +219,7 @@ const TransactionList = () => {
             }}
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)", margin: "0 5px" }}
           >
-            <Svgs.deleteSvg fillColor="#fff" />
+            <Svgs.deleteSvg fillColor='#fff' />
           </IconButton>
         </Box>
       ),
@@ -226,16 +228,16 @@ const TransactionList = () => {
 
   return (
     <>
-      <DashboardBox gridArea="f">
+      <DashboardBox gridArea='f'>
         <BoxHeader
           title={
-            <Box display="flex" gap="10px" alignItems="center">
+            <Box display='flex' gap='10px' alignItems='center'>
               <span style={{ color: palette.tertiary[200] }}>
                 Recent Transactions
               </span>
               <IconButton
                 onClick={() => setOpenDialog(true)}
-                size="small"
+                size='small'
                 sx={{
                   backgroundColor: "rgba(136, 132, 216, 0.1)",
                   "&:hover": {
@@ -244,7 +246,7 @@ const TransactionList = () => {
                   borderRadius: "4px",
                 }}
               >
-                <Svgs.addSvg strokeColor="#12efc8" />
+                <Svgs.addSvg strokeColor='#12efc8' />
               </IconButton>
             </Box>
           }
@@ -258,9 +260,9 @@ const TransactionList = () => {
         />
 
         <Box
-          mt="0.5rem"
-          p="0 0.5rem"
-          height="75%" // Set the height to 75%
+          mt='0.5rem'
+          p='0 0.5rem'
+          height='75%' // Set the height to 75%
           sx={{
             "& .MuiDataGrid-root": {
               color: palette.grey[300],
@@ -300,7 +302,7 @@ const TransactionList = () => {
         onClose={() => setOpenDialog(false)}
         onSubmit={handleTransactionSubmit}
         initialData={newTransaction}
-        title="Transaction"
+        title='Transaction'
       />
 
       <TransactionDialog
@@ -314,7 +316,7 @@ const TransactionList = () => {
           })
         }
         initialData={newTransaction}
-        title="Edit Transaction"
+        title='Edit Transaction'
       />
 
       <DeleteConfirmationDialog
