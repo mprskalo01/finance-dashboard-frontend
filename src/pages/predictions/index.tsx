@@ -119,8 +119,8 @@ const Predictions: React.FC = () => {
               </IconButton>
             </Typography>
             <Typography variant='h6'>
-              Next year based on simple linear regression, current year based on
-              LSTM
+              LSTM AI Model disabled in frontend as I developed it in the
+              backend
             </Typography>
           </Box>
           <FlexBetween gap='1rem'>
@@ -139,9 +139,9 @@ const Predictions: React.FC = () => {
               onClick={() =>
                 setIsCurrentYearPredictions(!isCurrentYearPredictions)
               }
+              disabled
               sx={{
-                color: palette.grey[800],
-                backgroundColor: "#8BC1F7",
+                backgroundColor: "#363637",
                 boxShadow: "0.1rem 0.1rem 0.1rem rgba(0,0,0,0.4)",
                 "&:hover": { transform: "scale(1.15)" },
               }}
@@ -201,7 +201,7 @@ const Predictions: React.FC = () => {
                 dot={false}
                 opacity={isPredictions ? 1 : 0}
               />
-              <Line
+              {/* <Line
                 type='monotone'
                 dataKey='Current Year Predicted Revenue'
                 stroke='#8BC1F7'
@@ -209,7 +209,7 @@ const Predictions: React.FC = () => {
                 strokeWidth={isCurrentYearPredictions ? 3 : 0}
                 dot={false}
                 opacity={isCurrentYearPredictions ? 1 : 0}
-              />
+              /> */}
             </LineChart>
           ) : (
             <BarChart
