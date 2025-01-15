@@ -135,6 +135,7 @@ function CombinedChart() {
               )}
             </IconButton>
             <IconButton
+              disabled
               onClick={handleEditMonthlyValues}
               size='small'
               sx={{

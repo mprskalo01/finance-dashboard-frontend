@@ -5,7 +5,7 @@ import DashboardBox from "@/components/DashboardBox";
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
 import TransactionList from "./lists/TransactionList";
-// import { mockAccount } from "@/data/mockAccount";
+import { mockAccount } from "@/data/mockAccount";
 
 const Row2 = () => {
   const { palette } = useTheme();
@@ -47,8 +47,9 @@ const Row2 = () => {
   //   }
   // }, [account, updateCurrentMonthData]);
 
-  const currentMonthRevenue = 500;
-  const currentMonthExpenses = 300;
+  const lastMonth = mockAccount.monthlyData.length - 1;
+  const currentMonthRevenue = mockAccount.monthlyData[lastMonth].revenue;
+  const currentMonthExpenses = mockAccount.monthlyData[lastMonth].expenses;
   const currentMonthProfit = currentMonthRevenue - currentMonthExpenses;
   return (
     <>
@@ -74,10 +75,8 @@ const Row2 = () => {
         ) : (
           <>
             <BoxHeader
-              title='Current Month Performance'
-              sideText={`${new Date().toLocaleString("default", {
-                month: "long",
-              })} ${new Date().getFullYear()}`}
+              title='Last Month Performance (2024)'
+              sideText={`December 2024`}
             />
             <Box
               height='100%'

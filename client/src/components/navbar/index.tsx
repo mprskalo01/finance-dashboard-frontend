@@ -14,7 +14,7 @@ function Navbar() {
       {/* LEFT SIDE */}
       <FlexBetween gap="0.75rem">
         <NavLink
-          to="/dashboard"
+          to="/"
           onClick={() => setSelected("dashboard")}
           style={({ isActive }) => ({
             color: isActive ? "inherit" : palette.grey[700],
@@ -34,7 +34,7 @@ function Navbar() {
       <FlexBetween gap="2rem">
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <NavLink
-            to="/dashboard"
+            to="/"
             onClick={() => setSelected("dashboard")}
             style={({ isActive }) => ({
               color: isActive ? "inherit" : palette.grey[700],

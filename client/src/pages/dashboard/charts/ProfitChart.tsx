@@ -76,6 +76,9 @@ function ProfitChart() {
   const maxProfit = Math.max(
     ...revenueExpensesProfit.map((item) => parseFloat(item.profit))
   );
+  // const maxProfit = Math.max(
+  //   ...revenueExpensesProfit.map((item) => parseFloat(item.profit))
+  // );
   const buffer = 50; // Adjust the buffer as needed
 
   return (
@@ -208,6 +211,7 @@ function ProfitChart() {
               axisLine={false}
               tickLine={false}
               style={{ fontSize: "10px" }}
+              domain={[0, maxProfit]}
             />
             <Tooltip />
             <Bar dataKey='profit' fill='url(#colorProfit)' />

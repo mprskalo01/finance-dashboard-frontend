@@ -146,6 +146,7 @@ function ProductList() {
       renderCell: (params: GridCellParams) => (
         <Box>
           <IconButton
+            disabled
             onClick={() => {
               setSelectedProduct(params.row as Product);
               console.log(params.row); // Log the selected product
@@ -156,6 +157,7 @@ function ProductList() {
             <Svgs.editSvg fillColor='#fff' size='12px' />
           </IconButton>
           <IconButton
+            disabled
             onClick={() => {
               setSelectedProduct(params.row as Product);
               setOpenDeleteDialog(true);
@@ -178,6 +180,7 @@ function ProductList() {
               List of products
             </span>
             <IconButton
+              disabled
               onClick={() => setOpenAddDialog(true)}
               size='small'
               sx={{

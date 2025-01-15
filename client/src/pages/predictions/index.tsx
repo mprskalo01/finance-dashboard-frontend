@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTheme, Box, Button, Typography, IconButton } from "@mui/material";
 import {
   CartesianGrid,
@@ -20,48 +20,22 @@ import Navbar from "@/components/navbar";
 import Svgs from "@/assets/Svgs";
 import { mockAccount } from "@/data/mockAccount";
 
-const Predictions = () => {
+const Predictions: React.FC = () => {
   const { palette } = useTheme();
   const [isPredictions, setIsPredictions] = useState(false);
   const [isCurrentYearPredictions, setIsCurrentYearPredictions] =
     useState(false);
+  const [showAreaChart, setShowAreaChart] = useState(true);
+
   const account = mockAccount;
-  // const [lstmPredictions, setLstmPredictions] = useState<number[]>([]);  todo mockLSTM predic
   const lstmPredictions = [
     500, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100,
   ];
 
-  const [showAreaChart, setShowAreaChart] = useState(true);
+  if (!account) {
+    return null; // Render nothing if account data is unavailable
+  }
 
-  const fetchUserAccount = async () => {
-    try {
-      // const response = await api.getUserAccount();
-      console.log("fake prediction");
-      // setAccount(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  fetchUserAccount();
-
-  const fetchLstmPredictions = async () => {
-    try {
-      if (account) {
-        console.log("fake prediction");
-        // const response = await api.getFinancialPredictions(
-        //   account.monthlyData
-        // );
-        // setLstmPredictions(response.data.predictedRevenues);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  fetchLstmPredictions();
-
-  if (!account) return { formattedData: [], minValue: 0, maxValue: 0 };
   const allMonths = [
     "January",
     "February",
@@ -76,11 +50,14 @@ const Predictions = () => {
     "November",
     "December",
   ];
-  const monthData = account?.monthlyData;
-  const formatted: Array<DataPoint> = monthData.map(
-    ({ revenue }, i: number) => [i, revenue]
-  );
+
+  const monthData = account.monthlyData;
+  const formatted: Array<DataPoint> = monthData.map(({ revenue }, i) => [
+    i,
+    revenue,
+  ]);
   const regressionLine = regression.linear(formatted);
+
   const data = allMonths.map((month, i) => {
     const actualData = monthData.find(
       (data) => data.month.toLowerCase() === month.toLowerCase()
@@ -88,9 +65,7 @@ const Predictions = () => {
     return {
       name: month,
       "Actual Revenue": actualData ? actualData.revenue : null,
-      "Regression Line": regressionLine.points[i]
-        ? regressionLine.points[i][1]
-        : null,
+      "Regression Line": regressionLine.points[i]?.[1] ?? null,
       "Next Year Predicted Revenue": regressionLine.predict(
         i + monthData.length
       )[1],
@@ -98,7 +73,7 @@ const Predictions = () => {
     };
   });
 
-  const allValues = data.flatMap((d) =>
+  const numericValues = data.flatMap((d) =>
     [
       "Actual Revenue",
       "Regression Line",
@@ -106,27 +81,13 @@ const Predictions = () => {
       "Current Year Predicted Revenue",
     ]
       .map((key) => d[key as keyof typeof d])
-      .filter((value) => value !== null)
+      .filter((value): value is number => value !== null)
   );
 
-  const numericValues = allValues.filter(
-    (value): value is number => typeof value === "number"
-  );
   const minValue = Math.min(...numericValues);
   const maxValue = Math.max(...numericValues);
 
-  const formattedData = [
-    {
-      name: "name",
-      "Actual Revenue": 5000,
-      "Regression Line": 8000,
-      "Next Year Predicted Revenue": 8000,
-      "Current Year Predicted Revenue": 8000,
-    },
-  ];
-  const handleChartToggle = () => {
-    setShowAreaChart((prev) => !prev);
-  };
+  const handleChartToggle = () => setShowAreaChart((prev) => !prev);
 
   return (
     <>
@@ -145,7 +106,7 @@ const Predictions = () => {
                   marginLeft: "1rem",
                   "&:hover": {
                     backgroundColor: "rgba(14, 165, 233, 0.7)",
-                    scale: 1.1,
+                    transform: "scale(1.1)",
                   },
                   borderRadius: "4px",
                 }}
@@ -159,7 +120,7 @@ const Predictions = () => {
             </Typography>
             <Typography variant='h6'>
               Next year based on simple linear regression, current year based on
-              LTSM
+              LSTM
             </Typography>
           </Box>
           <FlexBetween gap='1rem'>
@@ -168,11 +129,8 @@ const Predictions = () => {
               sx={{
                 color: palette.grey[100],
                 backgroundColor: "#519DE9",
-                boxShadow: "0.1rem 0.1rem 0.1rem 0.1rem rgba(0,0,0,.4)",
-                transition: "transform 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.15)",
-                },
+                boxShadow: "0.1rem 0.1rem 0.1rem rgba(0,0,0,0.4)",
+                "&:hover": { transform: "scale(1.15)" },
               }}
             >
               {isPredictions ? "Hide " : "Show "}Next Year Predictions
@@ -184,28 +142,20 @@ const Predictions = () => {
               sx={{
                 color: palette.grey[800],
                 backgroundColor: "#8BC1F7",
-                boxShadow: "0.1rem 0.1rem 0.1rem 0.1rem rgba(0,0,0,.4)",
-                transition: "transform 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.15)",
-                },
+                boxShadow: "0.1rem 0.1rem 0.1rem rgba(0,0,0,0.4)",
+                "&:hover": { transform: "scale(1.15)" },
               }}
             >
-              {isCurrentYearPredictions ? "Hide " : "Show "}
-              Current Year Predictions
+              {isCurrentYearPredictions ? "Hide " : "Show "}Current Year
+              Predictions
             </Button>
           </FlexBetween>
         </FlexBetween>
         <ResponsiveContainer width='100%' height='100%'>
           {showAreaChart ? (
             <LineChart
-              data={formattedData}
-              margin={{
-                top: 20,
-                right: 75,
-                left: 20,
-                bottom: 80,
-              }}
+              data={data}
+              margin={{ top: 20, right: 75, left: 20, bottom: 80 }}
             >
               <CartesianGrid strokeDasharray='3 3' stroke={palette.grey[800]} />
               <XAxis
@@ -217,14 +167,12 @@ const Predictions = () => {
               </XAxis>
               <YAxis
                 domain={[Math.min(minValue - 200, 0), maxValue + 200]}
-                axisLine={{ strokeWidth: "0" }}
                 style={{ fontSize: "10px" }}
                 tickFormatter={(v) => `$${v}`}
               >
                 <Label
                   value='Revenue in USD'
                   angle={-90}
-                  offset={-5}
                   position='insideLeft'
                 />
               </YAxis>
@@ -235,56 +183,38 @@ const Predictions = () => {
                 dataKey='Actual Revenue'
                 stroke={palette.tertiary[500]}
                 strokeWidth={3}
-                dot={{ strokeWidth: 5 }}
               />
               <Line
                 type='monotone'
                 dataKey='Regression Line'
-                stroke={"#e11d48"}
+                stroke='#e11d48'
                 strokeWidth={isPredictions ? 3 : 0}
                 dot={false}
-                style={{
-                  opacity: isPredictions ? 1 : 0,
-                  transition:
-                    "opacity 300ms ease-in-out, strokeWidth 300ms ease-in-out",
-                }}
+                opacity={isPredictions ? 1 : 0}
               />
               <Line
                 type='monotone'
                 dataKey='Next Year Predicted Revenue'
-                stroke={"#519DE9"}
+                stroke='#519DE9'
                 strokeDasharray='5 5'
                 strokeWidth={isPredictions ? 3 : 0}
                 dot={false}
-                style={{
-                  opacity: isPredictions ? 1 : 0,
-                  transition:
-                    "opacity 300ms ease-in-out, strokeWidth 300ms ease-in-out",
-                }}
+                opacity={isPredictions ? 1 : 0}
               />
               <Line
                 type='monotone'
                 dataKey='Current Year Predicted Revenue'
-                stroke={"#8BC1F7"}
+                stroke='#8BC1F7'
                 strokeDasharray='3 3'
                 strokeWidth={isCurrentYearPredictions ? 3 : 0}
                 dot={false}
-                style={{
-                  opacity: isCurrentYearPredictions ? 1 : 0,
-                  transition:
-                    "opacity 300ms ease-in-out, strokeWidth 300ms ease-in-out",
-                }}
+                opacity={isCurrentYearPredictions ? 1 : 0}
               />
             </LineChart>
           ) : (
             <BarChart
-              data={formattedData}
-              margin={{
-                top: 20,
-                right: 75,
-                left: 20,
-                bottom: 80,
-              }}
+              data={data}
+              margin={{ top: 20, right: 75, left: 20, bottom: 80 }}
             >
               <CartesianGrid strokeDasharray='3 3' stroke={palette.grey[800]} />
               <XAxis
@@ -296,41 +226,27 @@ const Predictions = () => {
               </XAxis>
               <YAxis
                 domain={[Math.min(minValue - 200, 0), maxValue + 200]}
-                axisLine={{ strokeWidth: "0" }}
                 style={{ fontSize: "10px" }}
                 tickFormatter={(v) => `$${v}`}
               >
                 <Label
                   value='Revenue in USD'
                   angle={-90}
-                  offset={-5}
                   position='insideLeft'
                 />
               </YAxis>
               <Tooltip />
               <Legend verticalAlign='top' />
-              <Bar
-                dataKey='Actual Revenue'
-                fill={palette.tertiary[500]}
-                barSize={20}
-              />
+              <Bar dataKey='Actual Revenue' fill={palette.tertiary[500]} />
               <Bar
                 dataKey='Current Year Predicted Revenue'
-                fill={"#8BC1F7"}
-                barSize={20}
-                style={{
-                  opacity: isCurrentYearPredictions ? 1 : 0,
-                  transition: "opacity 300ms ease-in-out",
-                }}
+                fill='#8BC1F7'
+                opacity={isCurrentYearPredictions ? 1 : 0}
               />
               <Bar
                 dataKey='Next Year Predicted Revenue'
-                fill={"#1e82af"}
-                barSize={20}
-                style={{
-                  opacity: isPredictions ? 1 : 0,
-                  transition: "opacity 300ms ease-in-out",
-                }}
+                fill='#1e82af'
+                opacity={isPredictions ? 1 : 0}
               />
             </BarChart>
           )}

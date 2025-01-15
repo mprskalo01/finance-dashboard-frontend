@@ -28,17 +28,17 @@ const BoxHeader = ({ icon, title, subtitle, sideText }: Props) => {
   const tooltipMessage =
     isString(sideText) && sideText.startsWith("N/A")
       ? "No last year's data found"
-      : "Comparing monthly values";
+      : "Change from last month";
 
   return (
-    <FlexBetween color={palette.grey[400]} margin="0.5rem 1rem 0 1rem">
+    <FlexBetween color={palette.grey[400]} margin='0.5rem 1rem 0 1rem'>
       <FlexBetween>
         {icon}
-        <Box width="100%">
-          <Typography variant="h4" mb="-0.1rem">
+        <Box width='100%'>
+          <Typography variant='h4' mb='-0.1rem'>
             {title}
           </Typography>
-          <Typography variant="h6" mb="-0.1rem">
+          <Typography variant='h6' mb='-0.1rem'>
             {subtitle}
           </Typography>
         </Box>
@@ -46,8 +46,8 @@ const BoxHeader = ({ icon, title, subtitle, sideText }: Props) => {
       {shouldShowTooltip ? (
         <Tooltip title={tooltipMessage}>
           <Typography
-            variant="h5"
-            fontWeight="700"
+            variant='h5'
+            fontWeight='700'
             color={
               isString(sideText)
                 ? sideText.startsWith("-")
@@ -63,8 +63,8 @@ const BoxHeader = ({ icon, title, subtitle, sideText }: Props) => {
         </Tooltip>
       ) : (
         <Typography
-          variant="h5"
-          fontWeight="700"
+          variant='h5'
+          fontWeight='700'
           color={
             isString(sideText)
               ? sideText.startsWith("-")

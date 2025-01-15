@@ -58,6 +58,14 @@ function AccountStats() {
 
   const account = mockAccount;
 
+  const accountRevenue = account.monthlyData.reduce((acc, month) => {
+    return acc + month.revenue;
+  }, 0);
+  const accountExpenses = account.monthlyData.reduce((acc, month) => {
+    return acc + month.expenses;
+  }, 0);
+  const accountProfit = accountRevenue - accountExpenses;
+
   const handleEditAccount = () => {
     setEditedAccount({
       currentBalance: account?.currentBalance || 0,
@@ -150,7 +158,7 @@ function AccountStats() {
         />
         <Box mt={2} sx={{ px: 2, pb: 2, pt: 0 }}>
           <Typography variant='h5' color={palette.grey[300]}>
-            Your current account balance is:{" "}
+            Your current account balance:{" "}
             <Typography
               variant='h2'
               component='span'
@@ -160,12 +168,14 @@ function AccountStats() {
               ${account?.currentBalance.toFixed(2)}
               <IconButton
                 onClick={handleEditAccount}
+                disabled
                 size='small'
                 sx={{
                   backgroundColor: "rgba(18, 239, 200, 0.1)",
                   "&:hover": {
                     backgroundColor: "rgba(18, 239, 200, 0.2)",
                   },
+
                   borderRadius: "4px",
                   marginLeft: "10px",
                 }}
@@ -175,44 +185,42 @@ function AccountStats() {
             </Typography>
           </Typography>
           <Typography variant='h5' color={palette.grey[300]}>
-            Your total revenue is:{" "}
+            Current year revenue:{" "}
             <Typography
               variant='h4' // Changed from h3 to h4
               component='span'
               fontWeight='bold'
               color={palette.tertiary[500]}
             >
-              ${account?.totalRevenue.toFixed(2)}
+              ${accountRevenue}
             </Typography>
           </Typography>
           <Typography variant='h5' color={palette.grey[300]}>
-            Your total expenses are:{" "}
+            Current year expenses:{" "}
             <Typography
               variant='h4' // Changed from h3 to h4
               component='span'
               fontWeight='bold'
               color={palette.secondary[500]}
             >
-              ${account?.totalExpenses.toFixed(2)}
+              ${accountExpenses}
             </Typography>
           </Typography>
           <Typography variant='h5' color={palette.grey[300]}>
-            Your total profit is:{" "}
+            Current year profit:{" "}
             <Typography
               variant='h4' // Changed from h3 to h4
               component='span'
               fontWeight='bold'
               color={palette.primary[500]}
             >
-              $
-              {(
-                (account?.totalRevenue ?? 0) - (account?.totalExpenses ?? 0)
-              ).toFixed(2)}
+              ${accountProfit.toFixed(2)}
             </Typography>
           </Typography>
         </Box>
 
         <Button
+          disabled
           variant='contained'
           color='secondary'
           // onClick={}
@@ -221,7 +229,8 @@ function AccountStats() {
           Logout
         </Button>
         <Button
-          variant='contained'
+          disabled
+          // variant='contained'
           onClick={handleEditUser}
           sx={{
             mt: 1,

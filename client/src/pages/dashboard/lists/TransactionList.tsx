@@ -204,6 +204,7 @@ const TransactionList = () => {
       renderCell: (params: GridCellParams) => (
         <Box>
           <IconButton
+            disabled
             onClick={() => {
               setSelectedTransaction(params.row as Transaction);
               setOpenEditDialog(true);
@@ -213,6 +214,7 @@ const TransactionList = () => {
             <Svgs.editSvg fillColor='#fff' size='12px' />
           </IconButton>
           <IconButton
+            disabled
             onClick={() => {
               setSelectedTransaction(params.row as Transaction);
               setOpenDeleteDialog(true);
@@ -236,6 +238,7 @@ const TransactionList = () => {
                 Recent Transactions
               </span>
               <IconButton
+                disabled
                 onClick={() => setOpenDialog(true)}
                 size='small'
                 sx={{

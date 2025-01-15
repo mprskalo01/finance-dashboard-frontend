@@ -26,7 +26,7 @@ export interface Account {
 
 export const mockAccount: Account = {
   userId: "66f84f82da0f82699ddf522c",
-  currentBalance: 11975,
+  currentBalance: 161975,
   totalRevenue: 433000,
   totalExpenses: 301100,
   monthlyData: [
@@ -40,6 +40,8 @@ export const mockAccount: Account = {
     { month: "august", revenue: 64500, expenses: 42200 },
     { month: "september", revenue: 75500, expenses: 50000 },
     { month: "october", revenue: 86000, expenses: 58000 },
+    { month: "november", revenue: 91000, expenses: 62000 },
+    { month: "december", revenue: 96000, expenses: 64000 },
   ],
   transactions: [
     {
