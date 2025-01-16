@@ -58,10 +58,10 @@ function Dashboard() {
     <>
       <Navbar />
       <Box
-        width="100%"
-        height="100%"
-        display="grid"
-        gap="1.5rem"
+        width='100%'
+        height='90vh' // Dynamically adjust for Navbar
+        display='grid'
+        gap='1.5rem'
         sx={
           isAboveMediumScreens
             ? {

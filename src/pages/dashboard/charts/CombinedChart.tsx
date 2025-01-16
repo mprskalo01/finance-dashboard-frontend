@@ -151,7 +151,7 @@ function CombinedChart() {
             </IconButton>
           </Box>
         }
-        sideText='Use the edit button to edit monthly values'
+        sideText='CRUD buttons disabled - backend not deployed'
       />
       <ResponsiveContainer width='100%' height='80%'>
         {showChart ? (

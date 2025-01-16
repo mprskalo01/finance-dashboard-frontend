@@ -9,43 +9,8 @@ import { mockAccount } from "@/data/mockAccount";
 
 const Row2 = () => {
   const { palette } = useTheme();
-  // const account = mockAccount;
-
-  // const [loading, setLoading] = useState(true);
-  // const [currentMonthRevenue, setCurrentMonthRevenue] = useState(0);
-  // const [currentMonthProfit, setCurrentMonthProfit] = useState(0);
-  // const [currentMonthExpenses, setCurrentMonthExpenses] = useState(0);
-
-  // const updateCurrentMonthData = useCallback((accountData: Account) => {
-  //   const currentMonthName = new Date()
-  //     .toLocaleString("default", { month: "long" })
-  //     .toLowerCase();
-  //   const currentMonthData = accountData.monthlyData.find(
-  //     (data) => data.month.toLowerCase() === currentMonthName
-  //   );
-
-  //   if (currentMonthData) {
-  //     setCurrentMonthRevenue(currentMonthData.revenue);
-  //     setCurrentMonthExpenses(currentMonthData.expenses);
-  //     setCurrentMonthProfit(
-  //       currentMonthData.revenue - currentMonthData.expenses
-  //     );
-  //   } else {
-  //     setCurrentMonthRevenue(0);
-  //     setCurrentMonthExpenses(0);
-  //     setCurrentMonthProfit(0);
-  //   }
-  // }, []);
 
   const loading = false;
-  // if (account) {
-  //   setLoading(false);
-  // }
-  // useEffect(() => {
-  //   if (account) {
-  //     updateCurrentMonthData(account);
-  //   }
-  // }, [account, updateCurrentMonthData]);
 
   const lastMonth = mockAccount.monthlyData.length - 1;
   const currentMonthRevenue = mockAccount.monthlyData[lastMonth].revenue;
